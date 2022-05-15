@@ -1,0 +1,18 @@
+module ps2_interface(clk,reset,wr_ps2,din,ps2_c,ps2_d,dout,tx_done,rx_done);
+input clk,reset,wr_ps2;
+input [7:0] din;
+
+inout ps2_d,ps2_c;
+output wire [7:0] dout;
+output tx_done,rx_done;
+
+wire tx_idle;
+
+ps2_transmitter u1(.clk(clk),.reset(reset),.wr_ps2(wr_ps2),.din(din),.ps2_c(ps2_c),.ps2_d(ps2_d),.tx_idle(tx_idle)
+,.tx_done(tx_done));
+
+ ps2_receiver u2(.clk(clk),.reset(reset),.rx_en(tx_idle),.ps_c(ps2_c),.ps_d(ps2_d),.rx_done_tick(rx_done),.dout(dout));
+ 
+
+
+endmodule 
